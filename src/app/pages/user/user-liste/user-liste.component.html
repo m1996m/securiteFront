@@ -1,0 +1,101 @@
+<div style="background: #ECECEC;padding:30px;">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <nz-card >
+        <div nz-row [nzGutter]="24" >
+          <div nz-col [nzSpan]="24">
+            <h1>Liste des utilisateurs</h1>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="24" >
+          <div nz-col [nzSpan]="18">
+          </div>
+          <div class="create-div" nz-col [nzSpan]="6">
+            <button (click)="openCreateUser()" class="create-user">Ajouter <span nz-icon nzType="user-add" nzTheme="outline"></span></button>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="24">
+          <div nz-col [nzSpan]="24">
+            <nz-table #fixedTable [nzData]="listOfDisplayData" [nzScroll]="{ x: '1150px', y: '240px' }">
+              <thead>
+              <tr>
+                <ng-container *ngFor="let header of listOfColumns">
+                  <th *ngIf="header.alignLeft" nzCustomFilter nzLeft [nzSortFn]="header.compare" [nzSortPriority]="header.priority">
+                    {{header.title}}
+                    @if (header.input == null){
+                      <nz-input-group nzCompact>
+                        <input nz-input name="search{{header.title}}" ngModel (ngModelChange)="search($event)" [placeholder]="'Search ' + header.title" [id]="'search'+header.title">
+                      </nz-input-group>
+                    }
+                    @if (header.title == "Statut"){
+                      <nz-input-group nzCompact>
+                        <nz-select class="select" name="searchStatut" ngModel (ngModelChange)="search($event)" placeholder="Search Statut" id="searchStatut">
+                          <nz-option nzValue="Actif" nzLabel="Actif"></nz-option>
+                          <nz-option nzValue="Bloqué" nzLabel="Bloqué"></nz-option>
+                          <nz-option nzValue="Suspendu" nzLabel="Suspendu"></nz-option>
+                        </nz-select>
+                      </nz-input-group>
+                    }
+                    @if (header.title == "Type"){
+                      <nz-input-group nzCompact>
+                        <nz-select class="select" name="searchType" ngModel (ngModelChange)="search($event)" placeholder="Search Type" id="searchType">
+                          <nz-option nzValue="HopitalEntity" nzLabel="HopitalEntity"></nz-option>
+                          <nz-option nzValue="Commune" nzLabel="Commune"></nz-option>
+                        </nz-select>
+                      </nz-input-group>
+                    }
+                  </th>
+                  <th *ngIf="!header.alignLeft && header.alignRight" nzRight>
+                    {{header.title}}
+                  </th>
+                  <th *ngIf="!header.alignLeft && !header.alignRight" nzCustomFilter [nzSortFn]="header.compare" [nzSortPriority]="header.priority">
+                    {{header.title}}
+                    @if (header.input == null){
+                      <nz-input-group nzCompact>
+                        <input nz-input name="search{{header.title}}" ngModel (ngModelChange)="search($event)" [placeholder]="'Search ' + header.title" [id]="'search'+header.title">
+                      </nz-input-group>
+                    }
+                    @if (header.title == "Statut"){
+                      <nz-input-group nzCompact>
+                        <nz-select class="select" name="searchStatut" ngModel (ngModelChange)="search($event)" placeholder="Search Statut" id="searchStatut">
+                          <nz-option nzValue="En attente" nzLabel="En attente"></nz-option>
+                          <nz-option nzValue="Actif" nzLabel="Actif"></nz-option>
+                          <nz-option nzValue="Bloqué" nzLabel="Bloqué"></nz-option>
+                        </nz-select>
+                      </nz-input-group>
+                    }
+                    @if (header.title == "Type"){
+                      <nz-input-group nzCompact>
+                        <nz-select class="select" name="searchType" ngModel (ngModelChange)="search($event)" placeholder="Search Type" id="searchType">
+                          <nz-option nzValue="Compagnie" nzLabel="Compagnie"></nz-option>
+                          <nz-option nzValue="Particulier" nzLabel="Particulier"></nz-option>
+                        </nz-select>
+                      </nz-input-group>
+                    }
+                  </th>
+                </ng-container>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let user of fixedTable.data">
+                <td nzLeft>{{ user.firstName }}</td>
+                <td nzLeft>{{ user.lastName }}</td>
+                <td nzLeft>{{ user.type_user }}</td>
+                <td >{{ user.statut }}</td>
+                <td>{{ user.pays }}</td>
+                <td>{{ user.username }}</td>
+                <td nzRight style="width: 300px;">
+                  <button (click)="openEditUser(user)" style="background: #1423dc; margin-right: 2%"><span nz-icon nzType="edit" nzTheme="outline"></span></button>
+                  <button (click)="showDeleteConfirm(user.slug)" style="background: red;"><span nz-icon nzType="delete" nzTheme="outline"></span></button>
+                </td>
+              </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+</div>
+<app-user-create></app-user-create>
+<app-user-edite></app-user-edite>

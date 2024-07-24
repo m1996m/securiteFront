@@ -1,0 +1,88 @@
+p {
+  margin: 0;
+}
+
+.login-form {
+  max-width: 300px;
+}
+
+.login-form-margin {
+  margin-bottom: 16px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}
+
+nz-form-item {
+  margin-top: 1.5%;
+}
+
+.req {
+  color: red;
+}
+
+button{
+  margin-top: 3px;
+  color: white;
+  border-radius: 10px;
+  border: none;
+}
+
+h1{
+  margin: 5px;
+  background: #ECECEC;
+  color: black;
+  text-align: center;
+}
+
+.select, input {
+  width: 100%;
+  border-radius: 10px;
+}
+
+::ng-deep .ant-select-selector,
+::ng-deep .ant-select-selection-item {
+  border-radius: 10px !important;
+}
+
+.create-hopital {
+  padding: 10px;
+  background: #1423dc;
+}
+.create-div {
+  text-align: right;
+  margin-bottom: 1%;
+}
+
+.search-box {
+  padding: 8px;
+}
+
+.search-box input {
+  width: 188px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.search-box button {
+  width: 90px;
+}
+
+.search-button {
+  margin-right: 8px;
+}
+
+.custom-dropdown-class {
+  /* Ajustez ces valeurs en fonction de votre cas d'utilisation */
+  position: relative !important;
+  left: -50px !important;
+}
+
+.selected {
+  background-color: dodgerblue !important;
+}

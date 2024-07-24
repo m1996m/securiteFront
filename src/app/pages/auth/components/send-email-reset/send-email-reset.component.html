@@ -1,0 +1,30 @@
+<nz-modal [(nzVisible)]="isVisible" [nzFooter]="null" nzTitle="Envoie d'e-mail " (nzOnCancel)="handleCancel()" [nzWidth]="500" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent >
+    <div nz-col [nzSpan]="20" [nzOffset]="2">
+      <div style="background: #ECECEC;padding:30px;">
+        <div nz-row [nzGutter]="24">
+          <div nz-col [nzSpan]="24">
+            <nz-card >
+              <div nz-row [nzGutter]="24" >
+                <div nz-col [nzSpan]="24">
+                  <h1>Saisissez votre e-mail</h1>
+                </div>
+              </div>
+              <form nz-form [formGroup] = "formBulder" class="login-form" (ngSubmit)="sendEmail()">
+                <nz-form-item>
+                  <nz-form-control nzErrorTip="Email">
+                    <nz-form-label>E-mail<span class="req"> *</span></nz-form-label>
+                    <nz-input-group nzPrefixIcon="email">
+                      <input type="text" nz-input formControlName="email" placeholder="Entrez votre d'e-mail" />
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+                <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Envoyer</button>
+              </form>
+            </nz-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

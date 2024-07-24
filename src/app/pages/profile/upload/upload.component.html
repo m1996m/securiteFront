@@ -1,0 +1,39 @@
+<nz-modal [(nzVisible)]="isVisible" [nzFooter]="null" nzTitle="Modification avatar" (nzOnCancel)="handleCancel()" [nzWidth]="600" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent >
+    <div style="background: #ECECEC;padding:30px;">
+      <div nz-row [nzGutter]="24">
+        <div nz-col [nzSpan]="24">
+          <nz-card >
+            <div nz-row [nzGutter]="24">
+              <div nz-col [nzSpan]="24">
+                <form nz-form [formGroup] = "formBulder" >
+                  <div nz-row>
+                    <div nz-col [nzSpan]="12">
+
+                      <nz-form-item>
+                        <nz-upload
+                          [nzBeforeUpload]="handleBeforeUpload">
+                          <button nz-button nzType="dashed">
+                            Charger votre avatar<span nz-icon nzType="upload"></span>
+                          </button>
+                        </nz-upload>
+                      </nz-form-item>
+                      <div >
+                        {{formBulder.value['avatar']}}
+                      </div>
+                    </div>
+                    <div nz-col [nzSpan]="12">
+                      <div nz-col [nzSpan]="12" [nzOffset]="6">
+                        <button [disabled]="formBulder.invalid" (click)="enregistrer()" nz-button class="login-form-button login-form-margin">Enregistrer</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

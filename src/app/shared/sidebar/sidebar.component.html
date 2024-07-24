@@ -1,0 +1,90 @@
+<nz-layout class="layout">
+  <nz-sider
+    [(nzCollapsed)]="isCollapsed"
+    [nzTheme]="'light'"
+    [nzTrigger]="null"
+    class="menu-sidebar"
+    nzBreakpoint="md"
+    nzCollapsible
+    nzWidth="256px">
+    <div [ngClass]="isCollapsed ? 'logo-collapsed' : 'logo'">
+      <img
+        alt="Logo ITechEasyLife"
+        class="img_iTechEasyLife"
+        height="40"
+        ngSrc="../../../assets/images/innoTech.png"
+        priority="high"
+        width="100" />
+      <h3 [class.collapsed]="isCollapsed" class="app-name">
+        {{ environment.APP_NAME }}
+      </h3>
+    </div>
+    @if (user.isLogged) {
+      <ul
+        [nzInlineCollapsed]="isCollapsed"
+        nz-menu
+        nzMode="inline"
+        nzTheme="light">
+        @for (menuElement of menuElements; track menuElement.text) {
+          <ng-container>
+            <li
+              *ngIf="!menuElement.submenu"
+              [nzTooltipTitle]="isCollapsed ? menuElement.tooltipText : ''"
+              nz-menu-item
+              nz-tooltip
+              [nzSelected]="menuElement === activeMenuItem"
+              nzTooltipPlacement="right">
+              <a [routerLink]="menuElement.route">
+                <i [nzType]="menuElement.icon" nz-icon></i>
+                <span>{{ menuElement.text }}</span>
+              </a>
+            </li>
+            @if (menuElement.submenu) {
+              <li [nzTitle]="menuElement.text" nz-submenu [nzIcon]="menuElement.icon">
+                <ul>
+                  @for (
+                    submenuElement of menuElement.submenu;
+                    track submenuElement.text
+                  ) {
+                    <li
+                nz-menu-item
+                [nzSelected]="menuElement === activeMenuItem" >
+                <a [routerLink]="submenuElement.route" >
+                  <span>
+                    <span style="color: {{submenuElement.color}}" nz-icon [nzType]="submenuElement.icon" nzTheme="outline"></span>
+                    {{ submenuElement.text }}
+                  </span>
+                </a>
+              </li>
+                  }
+                </ul>
+              </li>
+            }
+          </ng-container>
+        }
+      </ul>
+    }
+  </nz-sider>
+  <nz-layout
+    [ngClass]="
+      isCollapsed ? 'right-layout-collapsed ' : 'right-layout-sider-full'
+    ">
+    <nz-header>
+      <div class="app-header">
+        <span
+          (click)="isCollapsed = !isCollapsed"
+          (keydown.enter)="isCollapsed = !isCollapsed"
+          class="header-trigger"
+          tabindex="0">
+          <i
+            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            class="trigger"
+            nz-icon></i>
+        </span>
+      </div>
+    </nz-header>
+    <nz-content>
+      <ng-content></ng-content>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

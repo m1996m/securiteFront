@@ -1,0 +1,77 @@
+<nz-modal [(nzVisible)]="isVisible" [nzFooter]="null" nzTitle="Modification de compte" (nzOnCancel)="handleCancel()" [nzWidth]="800" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent >
+    <div style="background: #ECECEC;padding:30px;">
+      <div nz-row [nzGutter]="24">
+        <div nz-col [nzSpan]="24">
+          <nz-card >
+
+            <div nz-row [nzGutter]="24">
+              <div nz-col [nzSpan]="24">
+                <form nz-form [formGroup] = "formBulder"  (ngSubmit)="enregistrer()">
+                  <div nz-row>
+                    <div nz-col [nzSpan]="12">
+                      <nz-form-item >
+                        <nz-form-label >Type utilisateur<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                        <nz-form-control [nzXs]="23"  nzErrorTip="Entrez type">
+                          <nz-select (ngModelChange)="verficaitonTypeUser()" class="select" formControlName="type_user" nzPlaceHolder="Type">
+                            <nz-option nzValue="Hopital" nzLabel="Hopital"></nz-option>
+                            <nz-option nzValue="Commune" nzLabel="Commune"></nz-option>
+                          </nz-select>
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre prénom d'utilisateur">
+                          <nz-form-label>Prénom<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input type="text" nz-input formControlName="firstName" placeholder="Prenom " />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre nom">
+                          <nz-form-label>Nom<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input type="text" nz-input formControlName="lastName" placeholder="Nom" />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="12" >
+                      <nz-form-item >
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre date de naissance">
+                          <nz-form-label>Date de naissance <span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input type="date" nz-input formControlName="birthDate" placeholder="Date de naissance" />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre pays">
+                          <nz-form-label>Pays<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Pays" class="select" formControlName="pays" >
+                            <ng-container >
+                              <nz-option *ngFor="let country of pays" [nzValue]="country.name" [nzLabel]="country.name"></nz-option>
+                            </ng-container>
+                          </nz-select>
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item >
+                        <nz-form-label >Type utilisateur<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                        <nz-form-control [nzXs]="23"  nzErrorTip="Entrez statut">
+                          <nz-select (ngModelChange)="verficaitonTypeUser()" class="select" formControlName="statut" nzPlaceHolder="Statut">
+                            <nz-option nzValue="Actif" nzLabel="Actif"></nz-option>
+                            <nz-option nzValue="Bloqué" nzLabel="Bloqué"></nz-option>
+                            <nz-option nzValue="Suspendu" nzLabel="Suspendu"></nz-option>
+                          </nz-select>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                  </div>
+                  <div nz-row [nzGutter]="24">
+                    <div nz-col [nzSpan]="6" [nzOffset]="9">
+                      <button [disabled]="formBulder.invalid && !isSamePassword" nz-button class="login-form-button login-form-margin">Enregistrer</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

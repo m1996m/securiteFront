@@ -1,0 +1,61 @@
+p {
+  margin: 0;
+}
+
+.login-form {
+  max-width: 300px;
+}
+
+.login-form-margin {
+  margin-bottom: 16px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}
+
+nz-form-item {
+  margin-top: 1.5%;
+}
+
+.req {
+  color: red;
+}
+
+p {
+  margin-bottom: 1%;
+}
+
+h2{
+  font-weight: bold;
+  color: #1423DC;
+  margin-top: 1%;
+}
+button{
+  margin-top: 10px;
+  background: #1423DC;
+  color: white;
+  border-radius: 10px;
+  padding: 2%;
+}
+
+h1{
+  margin: 5px;
+  background: #ECECEC;
+  color: black;
+  text-align: center;
+}
+
+.select, input {
+  width: 100%;
+  border-radius: 10px;
+}
+
+::ng-deep .ant-select-selector,
+::ng-deep .ant-select-selection-item {
+  border-radius: 10px !important;
+}

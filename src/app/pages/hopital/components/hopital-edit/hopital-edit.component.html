@@ -1,0 +1,69 @@
+<nz-modal [(nzVisible)]="isVisible" [nzFooter]="null" nzTitle="Ajout hopital" (nzOnCancel)="handleCancel()" [nzWidth]="800" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent >
+    <div style="background: #ECECEC; padding:30px">
+      <div nz-row [nzGutter]="24">
+        <div nz-col [nzSpan]="24">
+          <nz-card >
+            <div nz-row [nzGutter]="24">
+              <div nz-col [nzSpan]="24">
+                <form nz-form [formGroup] = "formBulder"  (ngSubmit)="enregistrer()">
+                  <div nz-row>
+                    <div nz-col [nzSpan]="12">
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre designaton">
+                          <nz-form-label>Nom <span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input type="text" nz-input formControlName="designation" placeholder="designation " />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item >
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre date de creation">
+                          <nz-form-label>Date creation <span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input type="date" nz-input formControlName="dateCreation" placeholder="Date de creation" />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez addresse de l'hopital">
+                          <nz-form-label>Adresse<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input type="text" nz-input formControlName="adresse" placeholder="Adresse" />
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                    <div nz-col [nzSpan]="12" >
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez tel">
+                          <nz-form-label>Tel<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input type="tel" nz-input formControlName="tel" placeholder="tel" />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre adresse email">
+                          <nz-form-label>Email<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input type="email" nz-input formControlName="email" placeholder="Adresse email" />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre pays">
+                          <nz-form-label>Pays<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Pays" class="select" formControlName="pays" >
+                            <ng-container >
+                              <nz-option *ngFor="let country of pays" [nzValue]="country.name" [nzLabel]="country.name"></nz-option>
+                            </ng-container>
+                          </nz-select>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </div>
+                  </div>
+                  <div nz-row [nzGutter]="24">
+                    <div nz-col [nzSpan]="6" [nzOffset]="9">
+                      <button [disabled]="formBulder.invalid" nz-button class="login-form-button login-form-margin">Enregistrer</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

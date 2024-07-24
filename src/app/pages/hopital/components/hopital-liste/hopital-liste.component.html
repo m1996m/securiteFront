@@ -1,0 +1,85 @@
+<div style="background: #ECECEC;padding:30px;">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <nz-card >
+        <div nz-row [nzGutter]="24" >
+          <div nz-col [nzSpan]="24">
+            <h1>Liste des hopitaux</h1>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="24" >
+          <div nz-col [nzSpan]="18">
+          </div>
+          <div class="create-div" nz-col [nzSpan]="6">
+            <button (click)="openCreatehopital()" class="create-hopital">Ajouter <span nz-icon nzType="plus" nzTheme="outline"></span></button>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="24">
+          <div nz-col [nzSpan]="24">
+            <nz-table #fixedTable [nzData]="listOfDisplayData" [nzScroll]="{ x: '1150px', y: '240px' }">
+              <thead>
+              <tr>
+                <ng-container *ngFor="let header of listOfColumns">
+                  <th *ngIf="header.alignLeft" nzCustomFilter nzLeft [nzSortFn]="header.compare" [nzSortPriority]="header.priority">
+                    {{header.title}}
+                    @if (header.input == null){
+                      <nz-input-group nzCompact>
+                        <input nz-input name="search{{header.title}}" ngModel (ngModelChange)="search($event)" [placeholder]="'Search ' + header.title" [id]="'search'+header.title">
+                      </nz-input-group>
+                    }
+                  </th>
+                  <th *ngIf="!header.alignLeft && header.alignRight" nzRight>
+                    {{header.title}}
+                  </th>
+
+                  <th *ngIf="!header.alignLeft && !header.alignRight" nzCustomFilter [nzSortFn]="header.compare" [nzSortPriority]="header.priority">
+                    {{header.title}}
+                    @if (header.input == null){
+                      <nz-input-group nzCompact>
+                        <input nz-input name="search{{header.title}}" ngModel (ngModelChange)="search($event)" [placeholder]="'Search ' + header.title" [id]="'search'+header.title">
+                      </nz-input-group>
+                    }
+                    @if (header.title == "Statut"){
+                      <nz-input-group nzCompact>
+                        <nz-select class="select" name="searchStatut" ngModel (ngModelChange)="search($event)" placeholder="Search Statut" id="searchStatut">
+                          <nz-option nzValue="En attente" nzLabel="En attente"></nz-option>
+                          <nz-option nzValue="Actif" nzLabel="Actif"></nz-option>
+                          <nz-option nzValue="Bloqué" nzLabel="Bloqué"></nz-option>
+                        </nz-select>
+                      </nz-input-group>
+                    }
+                    @if (header.title == "Type"){
+                      <nz-input-group nzCompact>
+                        <nz-select class="select" name="searchType" ngModel (ngModelChange)="search($event)" placeholder="Search Type" id="searchType">
+                          <nz-option nzValue="Compagnie" nzLabel="Compagnie"></nz-option>
+                          <nz-option nzValue="Particulier" nzLabel="Particulier"></nz-option>
+                        </nz-select>
+                      </nz-input-group>
+                    }
+                  </th>
+                </ng-container>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let hopital of fixedTable.data">
+                <td nzLeft>{{ hopital.designation }}</td>
+                <td nzLeft>{{ hopital.dateCreation | date: 'dd/MM/yyyy' }}</td>
+                <td nzLeft>{{ hopital.adresse }}</td>
+                <td >{{ hopital.tel }}</td>
+                <td>{{ hopital.email }}</td>
+                <td>{{ hopital.pays }}</td>
+                <td nzRight style="width: 300px;">
+                  <button (click)="openEdithopital(hopital)" style="background: #1423dc; margin-right: 2%"><span nz-icon nzType="edit" nzTheme="outline"></span></button>
+                  <button (click)="showDeleteConfirm(hopital.slug)" style="background: red;"><span nz-icon nzType="delete" nzTheme="outline"></span></button>
+                </td>
+              </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+</div>
+<app-hopital-create></app-hopital-create>
+<app-hopital-edit></app-hopital-edit>

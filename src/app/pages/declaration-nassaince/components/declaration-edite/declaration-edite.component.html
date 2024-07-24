@@ -1,0 +1,179 @@
+<nz-modal [(nzVisible)]="isVisible" [nzFooter]="null" nzTitle="Ajout déclaration de naissance" (nzOnCancel)="handleCancel()" [nzWidth]="800" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent >
+    <nz-steps [nzCurrent]="current" nzSize="small" style="margin-bottom: 1%">
+      <nz-step nzTitle="Informations nouveau né"></nz-step>
+      <nz-step nzTitle="Informations des parents"></nz-step>
+      <nz-step nzTitle="Récapitulatif"></nz-step>
+    </nz-steps>
+    <div style="background: #ECECEC; padding:30px">
+      <div nz-row [nzGutter]="24">
+        <div nz-col [nzSpan]="24">
+          <nz-card >
+            <div nz-row [nzGutter]="24">
+              <div nz-col [nzSpan]="24">
+                <form nz-form [formGroup] = "formBulder" >
+                  @if (current === 0) {
+                    <div nz-row>
+                      <div nz-col [nzSpan]="12">
+                        <nz-form-item>
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez le nom de l'enfant">
+                            <nz-form-label>Nom <span class="req" title="Ce champ doit être renseigné"></span></nz-form-label>
+                            <input type="text" nz-input formControlName="childLastName" placeholder="Nom de l'enfant " />
+                          </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez le prénom de l'enfant">
+                            <nz-form-label>Prénom <span class="req" title="Ce champ doit être renseigné"></span></nz-form-label>
+                            <input type="text" nz-input formControlName="childFirstName" placeholder="Prénom de l'enfant " />
+                          </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item >
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre date de creation">
+                            <nz-form-label>Date creation <span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                            <input type="date" nz-input formControlName="birthDateChild" placeholder="Date de naissance" />
+                          </nz-form-control>
+                        </nz-form-item>
+                      </div>
+                      <div nz-col [nzSpan]="12" >
+                        <nz-form-item>
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre pays">
+                            <nz-form-label>Genre<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Genre de l'enfant" class="select" formControlName="genderChild" >
+                              <nz-option nzValue="Fille" nzLabel="Fille"></nz-option>
+                              <nz-option nzValue="Garçon" nzLabel="Garçon"></nz-option>
+                            </nz-select>
+                          </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre pays">
+                            <nz-form-label>Type naissance<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="type Naissance" class="select" formControlName="typeNaissance" >
+                              <nz-option nzValue="Normal" nzLabel="Normal"></nz-option>
+                              <nz-option nzValue="Prématuré" nzLabel="Prématuré"></nz-option>
+                              <nz-option nzValue="Cesariéenne" nzLabel="Cesarienne"></nz-option>
+                            </nz-select>
+                          </nz-form-control>
+                        </nz-form-item>
+                      </div>
+                    </div>
+                  }
+                  @if (current === 1) {
+                    <div nz-row>
+                      <div nz-col [nzSpan]="12">
+                        <nz-form-item>
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez le nom de la mère">
+                            <nz-form-label>Nom de la mère<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                            <input type="text" nz-input formControlName="motherLastName" placeholder="Nom de la mère " />
+                          </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez le prénom de la mère">
+                            <nz-form-label>Prénom de la mère <span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                            <input type="text" nz-input formControlName="motherFirstName" placeholder="Prénom de la mère " />
+                          </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item >
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre date de naissance">
+                            <nz-form-label>Date de naissance de la mère <span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                            <input type="date" nz-input formControlName="motherBirthDate" placeholder="Date de naissance de la mère" />
+                          </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez l'adresse de la mère">
+                            <nz-form-label>Adresse de la mère <span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                            <input type="text" nz-input formControlName="motherAddress" placeholder="Adresse de la mère " />
+                          </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez le prénom de la mère">
+                            <nz-form-label>Téléphone de la mère <span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                            <input type="text" nz-input formControlName="motherPhone" placeholder="Téléphone de la mère " />
+                          </nz-form-control>
+                        </nz-form-item>
+                      </div>
+                      <div nz-col [nzSpan]="12" >
+                        <nz-form-item>
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez le nom du père">
+                            <nz-form-label>Nom du père<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                            <input type="text" nz-input formControlName="fatherLastName" placeholder="Nom du père" />
+                          </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez le prénom du père">
+                            <nz-form-label>Prénom du père<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                            <input type="text" nz-input formControlName="fatherFirstName" placeholder="Prénom du père " />
+                          </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item >
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre date de naissance du père">
+                            <nz-form-label>Date de naissance du père <span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                            <input type="date" nz-input formControlName="fatherBirthDate" placeholder="Date de naissance du père" />
+                          </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez l'adresse du père">
+                            <nz-form-label>Adresse du père <span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                            <input type="text" nz-input formControlName="fatherAddress" placeholder="Adresse du père " />
+                          </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                          <nz-form-control [nzXs]="23" nzErrorTip="Entrez le prénom du père">
+                            <nz-form-label>Téléphone du père<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                            <input type="text" nz-input formControlName="fatherPhone" placeholder="Téléphone du père " />
+                          </nz-form-control>
+                        </nz-form-item>
+                      </div>
+                    </div>
+                  }
+                  @if (current === 2) {
+                    <h2 style="margin-bottom: 2%;color: #ECECEC">Informations personnelles</h2>
+                    <div nz-row>
+                      <div nz-col [nzSpan]="12">
+                        <p><b>Nom:</b>  {{ formBulder.get('childLastName')?.value }}</p>
+                        <p> <b>Prénom:</b> {{ formBulder.get('childFirstName')?.value }}</p>
+                        <p> <b>Date de naissance:</b> {{ formBulder.get('birthDateChild')?.value | date: 'dd/MM/yyyy'}}</p>
+                      </div>
+                      <div nz-col [nzSpan]="12" >
+                        <p><b>Genre:</b> {{ formBulder.get('genderChild')?.value }}</p>
+                        <p><b>Type de naissance:</b> {{ formBulder.get('typeNaissance')?.value }}</p>
+                      </div>
+                    </div>
+
+                    <h2 style="margin-bottom: 2%; margin-top: 2%;color: #ECECEC">Informations personnelles</h2>
+                    <div nz-row>
+                      <div nz-col [nzSpan]="12">
+                        <p><b>Nom de la mère :</b> {{ formBulder.get('motherLastName')?.value }}</p>
+                        <p><b>Prénom de la mère :</b> {{ formBulder.get('motherFirstName')?.value }}</p>
+                        <p><b>Date de naissance de la mère :</b> {{ formBulder.get('motherBirthDate')?.value }}</p>
+                        <p><b>Adresse de la mère :</b> {{ formBulder.get('motherAddress')?.value }}</p>
+                        <p><b>Téléphone de la mère :</b> {{ formBulder.get('motherPhone')?.value }}</p>
+                      </div>
+                      <div nz-col [nzSpan]="12">
+                        <p><b>Nom du père :</b> {{ formBulder.get('fatherLastName')?.value }}</p>
+                        <p><b>Prénom du père :</b> {{ formBulder.get('fatherFirstName')?.value }}</p>
+                        <p><b>Date de naissance du père :</b> {{ formBulder.get('fatherBirthDate')?.value }}</p>
+                        <p><b>Adresse du père :</b> {{ formBulder.get('fatherAddress')?.value }}</p>
+                        <p><b>Téléphone du père :</b> {{ formBulder.get('fatherPhone')?.value }}</p>
+                      </div>
+                    </div>
+                  }
+                  <div nz-row [nzGutter]="24">
+                    <div nz-col [nzSpan]="8">
+                      <button (click)="pre()" *ngIf="current > 0" nz-button class="login-form-button login-form-margin">Précédent</button>
+                    </div>
+                    <div nz-col [nzSpan]="8">
+                      <button (click)="next()" *ngIf="current < 2" nz-button class="login-form-button login-form-margin">Suivant</button>
+                    </div>
+                    <div nz-col [nzSpan]="8">
+                      <button *ngIf="current === 2 " [disabled]="formBulder.invalid" (click)="enregistrer()" nz-button class="login-form-button login-form-margin">Enregistrer</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

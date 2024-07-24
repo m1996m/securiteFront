@@ -1,0 +1,106 @@
+<nz-modal [(nzVisible)]="isVisible" [nzFooter]="null" nzTitle="Création de compte" (nzOnCancel)="handleCancel()" [nzWidth]="800" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent >
+    <div style="background: #ECECEC;padding:30px;">
+      <div nz-row [nzGutter]="24">
+        <div nz-col [nzSpan]="24">
+          <nz-card >
+
+            <div nz-row [nzGutter]="24">
+              <div nz-col [nzSpan]="24">
+                <form nz-form [formGroup] = "formBulder"  (ngSubmit)="enregistrer()">
+                  <div nz-row>
+                    <div nz-col [nzSpan]="12">
+                      <nz-form-item >
+                        <nz-form-label >Type utilisateur<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                        <nz-form-control [nzXs]="23"  nzErrorTip="Entrez type">
+                          <nz-select class="select" formControlName="type_user" nzPlaceHolder="Type">
+                            <nz-option nzValue="Hopital" nzLabel="Hopital"></nz-option>
+                            <nz-option nzValue="Commune" nzLabel="Commune"></nz-option>
+                          </nz-select>
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre prénom d'utilisateur">
+                          <nz-form-label>Prénom<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input type="text" nz-input formControlName="firstName" placeholder="Prenom " />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre nom">
+                          <nz-form-label>Nom<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input type="text" nz-input formControlName="lastName" placeholder="Nom" />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item >
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre date de naissance">
+                          <nz-form-label>Date de naissance <span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input type="date" nz-input formControlName="birthDate" placeholder="Date de naissance" />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre adresse email">
+                          <nz-form-label>Email<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input (blur)="verificationEmail($event)" type="email" nz-input formControlName="username" placeholder="Adresse email" />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <p style="color: red" *ngIf="isEmail">Un email existe déjà pour le même hopital</p>
+                    </div>
+                    <div nz-col [nzSpan]="12" >
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre pays">
+                          <nz-form-label>Pays<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <nz-select (ngModelChange)="getAllHopital($event)" nzShowSearch nzAllowClear nzPlaceHolder="Pays" class="select" formControlName="pays" >
+                            <ng-container >
+                              <nz-option *ngFor="let country of pays" [nzValue]="country.name" [nzLabel]="country.name"></nz-option>
+                            </ng-container>
+                          </nz-select>
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-label>Organisation<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                        <nz-form-control [nzXs]="23"  nzErrorTip="Entrez Hopital">
+                          <nz-select (ngModelChange)="verificationEmail($event)" class="select" formControlName="tier" nzPlaceHolder="hopital">
+                            <ng-container >
+                              <nz-option *ngFor="let hopital of hopitals" [nzValue]="hopital.slug" [nzLabel]="hopital.designation"></nz-option>
+                            </ng-container>
+                          </nz-select>
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez début">
+                          <nz-form-label>Début d'activité <span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input type="date" nz-input formControlName="debut" placeholder="Date debut" />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre mot de passe">
+                          <nz-form-label>Mot de passe<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input (keyup)="SamePassword()" type="password" nz-input formControlName="password" placeholder="Mot de passe" />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <div *ngIf="formBulder.get('password')?.errors?.['pattern']" style="color: red">
+                        Le mot de passe doit contenir au moins une lettre en minuscule, une lettre en majuscule, un chiffre et un caractère spécial.
+                      </div>
+                      <nz-form-item>
+                        <nz-form-control [nzXs]="23" nzErrorTip="Entrez votre mot de passe">
+                          <nz-form-label>Confirmation<span class="req" title="Ce champ doit être renseigné"> *</span></nz-form-label>
+                          <input (keyup)="SamePassword()" type="password" nz-input formControlName="confirmation" placeholder="Confirmation" />
+                        </nz-form-control>
+                      </nz-form-item>
+                      <p [hidden]="!isSamePassword" style="color: red">Mot de passe est different de la confirmation</p>
+                    </div>
+                  </div>
+                  <div nz-row [nzGutter]="24">
+                    <div nz-col [nzSpan]="6" [nzOffset]="9">
+                      <button [disabled]="formBulder.invalid && !isSamePassword && isEmail" nz-button class="login-form-button login-form-margin">Enregistrer</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>

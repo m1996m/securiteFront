@@ -1,0 +1,120 @@
+<div style="background: #ECECEC;padding:30px;">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <nz-card >
+        <div nz-row [nzGutter]="24" >
+          <div nz-col [nzSpan]="24">
+            <h1>Liste des déclarations de nasissance</h1>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="24" >
+
+          <div nz-col [nzSpan]="6">
+            <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzTrigger="click" nzPlacement="bottomRight" class="create-open liste">
+              Plus de colonnes
+              <span nz-icon nzType="down"></span>
+            </button>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu style="max-height: 300px; overflow-y: auto;">
+                <li nz-menu-item *ngFor="let column of listOfColumns;
+                let i = index" [class.selected]="column.show" (click)="onCheckedChange(i)">
+                  <label [class.selected]="column.show">{{ column.title }}</label>
+                </li>
+              </ul>
+            </nz-dropdown-menu>
+          </div>
+
+          <div nz-col [nzSpan]="12"></div>
+          <div class="create-div" nz-col [nzSpan]="6">
+            <button (click)="openCreateDeclaration()" class="create-open">Ajouter <span nz-icon nzType="plus" nzTheme="outline"></span></button>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="24">
+          <div nz-col [nzSpan]="24">
+            <nz-table #fixedTable [nzData]="listOfDisplayData" [nzScroll]="{ x: '1150px', y: '240px' }">
+              <thead>
+              <tr>
+                <ng-container *ngFor="let header of listOfColumns">
+                  <th *ngIf="header.alignLeft && header.show" nzCustomFilter nzLeft [nzSortFn]="header.compare" [nzSortPriority]="header.priority">
+                    {{header.title}}
+                    @if (header.input == null){
+                      <nz-input-group nzCompact>
+                        <input nz-input name="search{{header.title}}" ngModel (ngModelChange)="search($event)" [placeholder]="'Search ' + header.title" [id]="'search'+header.title">
+                      </nz-input-group>
+                    }
+                  </th>
+                  <th *ngIf="!header.alignLeft && header.alignRight && header.show" nzRight>
+                    {{header.title}}
+                  </th>
+
+                  <th *ngIf="!header.alignLeft && !header.alignRight && header.show" nzCustomFilter [nzSortFn]="header.compare" [nzSortPriority]="header.priority">
+                    {{header.title}}
+                    @if (header.input == null){
+                      <nz-input-group nzCompact>
+                        <input nz-input name="search{{header.title}}" ngModel (ngModelChange)="search($event)" [placeholder]="'Search ' + header.title" [id]="'search'+header.title">
+                      </nz-input-group>
+                    }
+                    @if (header.title == "Statut"){
+                      <nz-input-group nzCompact>
+                        <nz-select class="select" name="searchStatut" ngModel (ngModelChange)="search($event)" placeholder="Search Statut" id="searchStatut">
+                          <nz-option nzValue="En attente" nzLabel="En attente"></nz-option>
+                          <nz-option nzValue="Actif" nzLabel="Actif"></nz-option>
+                          <nz-option nzValue="Bloqué" nzLabel="Bloqué"></nz-option>
+                        </nz-select>
+                      </nz-input-group>
+                    }
+                    @if (header.title == "Type"){
+                      <nz-input-group nzCompact>
+                        <nz-select class="select" name="searchType" ngModel (ngModelChange)="search($event)" placeholder="Search Type" id="searchType">
+                          <nz-option nzValue="Compagnie" nzLabel="Compagnie"></nz-option>
+                          <nz-option nzValue="Particulier" nzLabel="Particulier"></nz-option>
+                        </nz-select>
+                      </nz-input-group>
+                    }
+                  </th>
+                </ng-container>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let data of fixedTable.data">
+                <td [hidden]="isColumnVisible('childFirstName')" nzLeft>{{ data.childFirstName }}</td>
+                <td  [hidden]="isColumnVisible('childLastName')" nzLeft>{{ data.childLastName }}</td>
+                <td [hidden]="isColumnVisible('birthDateChild')"  nzLeft>{{ data.birthDateChild | date: 'dd/MM/yyyy' }}</td>
+                <td [hidden]="isColumnVisible('numeroUnique')" nzLeft>{{ data.numeroUnique }}</td>
+                <td [hidden]="isColumnVisible('genderChild')" >{{ data.genderChild }}</td>
+                <td [hidden]="isColumnVisible('createdAt')" >{{ data.createdAt | date: 'dd/MM/yyyy' }}</td>
+                <td [hidden]="isColumnVisible('statut')" >{{ data.statut }}</td>
+                <td [hidden]="isColumnVisible('typeNaissance')" >{{ data.typeNaissance }}</td>
+                <td [hidden]="isColumnVisible('fatherFirstName')" >{{ data.fatherFirstName }}</td>
+                <td [hidden]="isColumnVisible('fatherLastName')" >{{ data.fatherLastName }}</td>
+                <td [hidden]="isColumnVisible('fatherBirthDate')" >{{ data.fatherBirthDate }}</td>
+                <td [hidden]="isColumnVisible('fatherPhone')" >{{ data.fatherPhone }}</td>
+                <td [hidden]="isColumnVisible('fatherAddress')" >{{ data.fatherAddress }}</td>
+                <td [hidden]="isColumnVisible('motherFirstName')" >{{ data.motherFirstName }}</td>
+                <td [hidden]="isColumnVisible('motherLastName')" >{{ data.motherLastName }}</td>
+                <td [hidden]="isColumnVisible('motherBirthDate')" >{{ data.motherBirthDate }}</td>
+                <td [hidden]="isColumnVisible('motherPhone')" >{{ data.motherPhone }}</td>
+                <td [hidden]="isColumnVisible('motherAddress')" >{{ data.motherAddress }}</td>
+                <td nzRight style="width: 300px;">
+                  <button (click)="openEditDeclaration(data)" style="background: #1423dc; margin-right: 2%"><span nz-icon nzType="edit" nzTheme="outline"></span></button>
+                  <button (click)="openShowDeclaration(data)" style="background: #1423dc; margin-right: 2%"><span nz-icon nzType="eye" nzTheme="outline"></span></button>
+                  <button (click)="showDeleteConfirm(data.slug)" style="background: red;"><span nz-icon nzType="delete" nzTheme="outline"></span></button>
+                </td>
+              </tr>
+<!--              <tr *ngFor="let data of fixedTable.data">
+                <td *ngFor="let column of listOfColumns"  [hidden]="!column.show">
+                  {{ column && column.key ? data[column.key] : '' }}
+                </td>
+              </tr>-->
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
+</div>
+<app-declaration-create></app-declaration-create>
+<app-declaration-edite></app-declaration-edite>
+<app-declaration-show></app-declaration-show>
+
